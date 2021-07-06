@@ -24,12 +24,12 @@ git clone git@github.com:DeusEditor/site.git
 
 echo -e '\033[42m[Run->]\033[0m Building editor'
 docker run --rm -v --interactive --tty --volume $WORKDIR/editor:/app --workdir /app node:alpine yarn
-docker run --rm -v --interactive --tty --volume $WORKDIR/editor:/app --workdir /app --env NODE_ENV=production --env VUE_APP_API_URL=https://$HOST_API node:alpine yarn build
+docker run --rm -v --interactive --tty --volume $WORKDIR/editor:/app --workdir /app --env NODE_ENV=production --env HOST_API=$HOST_API node:alpine yarn build
 rm -rf $WORKDIR/editor/node_modules
 
 echo -e '\033[42m[Run->]\033[0m Building cabinet'
 docker run --rm -v --interactive --tty --volume $WORKDIR/cabinet:/app --workdir /app node:alpine yarn
-docker run --rm -v --interactive --tty --volume $WORKDIR/cabinet:/app --workdir /app --env NODE_ENV=production --env VUE_APP_API_URL=https://$HOST_API node:alpine yarn build
+docker run --rm -v --interactive --tty --volume $WORKDIR/cabinet:/app --workdir /app --env NODE_ENV=production --env HOST_API=$HOST_API node:alpine yarn build
 rm -rf $WORKDIR/cabinet/node_modules
 
 echo -e '\033[42m[Run->]\033[0m Building nginx image'
