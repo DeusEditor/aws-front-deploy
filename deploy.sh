@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WORKDIR=/home/ec2-user
-export HOST_API=`aws ssm get-parameters --name HOST_API --region eu-central-1 --output text --query Parameters[].Value`
+HOST_API=$(aws ssm get-parameters --name HOST_API --region eu-central-1 --output text --query Parameters[].Value)
 
 cd $WORKDIR
 
