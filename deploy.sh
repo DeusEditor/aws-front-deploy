@@ -32,14 +32,14 @@ docker network create editor
 
 docker run -d \
     --network=editor \
-	-p 80 \
-	--restart=always \
-	--env WORDPRESS_DB_HOST=$DB_HOST \
-	--env WORDPRESS_DB_USER=$DB_USER \
-	--env WORDPRESS_DB_PASSWORD=$DB_PASSWORD \
-	--env WORDPRESS_DB_NAME=$DB_NAME_WP \
-	--volume $WORKDIR/themes:/var/www/html/wp-content/themes \
-	--name wordpress wordpress
+    -p 80 \
+    --restart=always \
+    --env WORDPRESS_DB_HOST=$DB_HOST \
+    --env WORDPRESS_DB_USER=$DB_USER \
+    --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD \
+    --env WORDPRESS_DB_NAME=$DB_NAME_WP \
+    --volume $WORKDIR/themes:/var/www/html/wp-content/themes \
+    --name wordpress wordpress
 	
 docker run -d --network=editor -p 80:80 --restart=always --name nginx_editor nginx_editor
 
@@ -56,3 +56,4 @@ docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install robots-txt-editor --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install tinymce-advanced --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wp-scss --allow-root
+docker exec wordpress chown www-data:www-data . -R
