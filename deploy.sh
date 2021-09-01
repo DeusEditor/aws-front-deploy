@@ -1,8 +1,12 @@
 #!/bin/bash
 
-WORKDIR=/home/ec2-user
-HOST_API=$(aws ssm get-parameters --name HOST_API --region eu-central-1 --output text --query Parameters[].Value)
+echo -e '\033[42m[Run->]\033[0m Get config data'
+DB_USER=$(aws ssm get-parameters --name DB_USER --region eu-central-1 --output text --query Parameters[].Value)
+DB_NAME_WP=$(aws ssm get-parameters --name DB_NAME_WP --region eu-central-1 --output text --query Parameters[].Value)
+DB_HOST=$(aws ssm get-parameters --name DB_HOST --region eu-central-1 --output text --query Parameters[].Value)
+DB_PASSWORD=$(aws ssm get-parameters --name DB_PASSWORD --region eu-central-1 --with-decryption --output text --query Parameters[].Value)
 
+WORKDIR=/home/ec2-user
 cd $WORKDIR
 
 echo -e '\033[42m[Run->]\033[0m yum update'
@@ -18,23 +22,37 @@ service docker start
 echo -e '\033[42m[Run->]\033[0m Clone'
 ssh -o StrictHostKeyChecking=no git@github.com # allow git clone with accept rsa fingerprint
 git clone git@github.com:DeusEditor/docker-front.git
-git clone git@github.com:DeusEditor/editor.git
-git clone git@github.com:DeusEditor/cabinet.git
-git clone git@github.com:DeusEditor/site.git
-
-echo -e '\033[42m[Run->]\033[0m Building editor'
-docker run --rm -v --interactive --tty --volume $WORKDIR/editor:/app --workdir /app node:alpine yarn
-docker run --rm -v --interactive --tty --volume $WORKDIR/editor:/app --workdir /app --env NODE_ENV=production --env HOST_API=$HOST_API node:alpine yarn build
-rm -rf $WORKDIR/editor/node_modules
-
-echo -e '\033[42m[Run->]\033[0m Building cabinet'
-docker run --rm -v --interactive --tty --volume $WORKDIR/cabinet:/app --workdir /app node:alpine yarn
-docker run --rm -v --interactive --tty --volume $WORKDIR/cabinet:/app --workdir /app --env NODE_ENV=production --env HOST_API=$HOST_API node:alpine yarn build
-rm -rf $WORKDIR/cabinet/node_modules
+git clone git@github.com:DeusEditor/deus-wp-theme.git themes
 
 echo -e '\033[42m[Run->]\033[0m Building nginx image'
 docker build -f $WORKDIR/docker-front/nginx/Dockerfile -t nginx_editor .
 
 echo -e '\033[42m[Run->]\033[0m Run containers'
 docker network create editor
+
+docker run -d \
+    --network=editor \
+	-p 80 \
+	--restart=always \
+	--env WORDPRESS_DB_HOST=$DB_HOST \
+	--env WORDPRESS_DB_USER=$DB_USER \
+	--env WORDPRESS_DB_PASSWORD=$DB_PASSWORD \
+	--env WORDPRESS_DB_NAME=$DB_NAME_WP \
+	--volume $WORKDIR/themes:/var/www/html/wp-content/themes \
+	--name wordpress wordpress
+	
 docker run -d --network=editor -p 80:80 --restart=always --name nginx_editor nginx_editor
+
+echo -e '\033[42m[Run->]\033[0m Configure wordpress'
+docker exec wordpress curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+docker exec wordpress chmod +x wp-cli.phar
+docker exec wordpress mv wp-cli.phar /usr/local/bin/wp
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp theme delete twentynineteen --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp theme delete twentytwenty --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp theme delete twentytwentyone --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install contact-form-7 --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install flamingo --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install remove-category-url --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install robots-txt-editor --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install tinymce-advanced --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wp-scss --allow-root
