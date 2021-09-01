@@ -22,7 +22,7 @@ service docker start
 echo -e '\033[42m[Run->]\033[0m Clone'
 ssh -o StrictHostKeyChecking=no git@github.com # allow git clone with accept rsa fingerprint
 git clone git@github.com:DeusEditor/docker-front.git
-git clone git@github.com:DeusEditor/deus-wp-theme.git themes
+git clone git@github.com:DeusEditor/deus-wp-theme.git themes/deus
 
 echo -e '\033[42m[Run->]\033[0m Building nginx image'
 docker build -f $WORKDIR/docker-front/nginx/Dockerfile -t nginx_editor .
