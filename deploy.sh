@@ -44,6 +44,7 @@ docker run -d \
 docker run -d --network=editor -p 80:80 --restart=always --name nginx_editor nginx_editor
 
 echo -e '\033[42m[Run->]\033[0m Configure wordpress'
+docker run --rm -v --interactive --tty --volume $WORKDIR/themes/deus:/app composer:2 install
 docker exec wordpress curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 docker exec wordpress chmod +x wp-cli.phar
 docker exec wordpress mv wp-cli.phar /usr/local/bin/wp
@@ -58,5 +59,4 @@ docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wp-scss --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wp-mail-smtp --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install amazon-s3-and-cloudfront --allow-root
-docker run --rm -v --interactive --tty --volume $WORKDIR/themes/deus:/app composer:2 install
 docker exec wordpress chown www-data:www-data . -R
