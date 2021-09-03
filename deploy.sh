@@ -5,6 +5,8 @@ DB_USER=$(aws ssm get-parameters --name DB_USER --region eu-central-1 --output t
 DB_NAME_WP=$(aws ssm get-parameters --name DB_NAME_WP --region eu-central-1 --output text --query Parameters[].Value)
 DB_HOST=$(aws ssm get-parameters --name DB_HOST --region eu-central-1 --output text --query Parameters[].Value)
 DB_PASSWORD=$(aws ssm get-parameters --name DB_PASSWORD --region eu-central-1 --with-decryption --output text --query Parameters[].Value)
+AWS_ACCESS_KEY_ID=$(aws ssm get-parameters --name _AWS_ACCESS_KEY_ID --region eu-central-1 --output text --query Parameters[].Value)
+AWS_SECRET_ACCESS_KEY=$(aws ssm get-parameters --name _AWS_SECRET_ACCESS_KEY --region eu-central-1 --with-decryption --output text --query Parameters[].Value)
 
 WORKDIR=/home/ec2-user
 cd $WORKDIR
@@ -38,6 +40,8 @@ docker run -d \
     --env WORDPRESS_DB_USER=$DB_USER \
     --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD \
     --env WORDPRESS_DB_NAME=$DB_NAME_WP \
+    --env AWS_ACCESS_KEY_ID=$DB_NAME_WP \
+    --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
     --volume $WORKDIR/themes:/var/www/html/wp-content/themes \
     --name wordpress lonya/wordpress
 	
