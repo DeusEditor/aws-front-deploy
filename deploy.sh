@@ -40,14 +40,14 @@ docker run -d \
     --env WORDPRESS_DB_USER=$DB_USER \
     --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD \
     --env WORDPRESS_DB_NAME=$DB_NAME_WP \
-    --env WORDPRESS_AUTH_KEY=]~Oondj`IK5CX`v[G5T{623(inAxx`Y/;yMF)loj6HT9Az;ynb`Ez>8V`-<<z28Q \
-    --env WORDPRESS_SECURE_AUTH_KEY=7D8q|]1rL3|[v_{Cop:=W=(8T]*D6s{+Nprb.d<XeSVqoj+LKa_h6Gx/;}Q_L{N# \
-    --env WORDPRESS_LOGGED_IN_KEY=[iCylNLAL@@p3VqVm:O:K^!V&FX}_`LTwBf#mKd(/*dyc%s/5Gi:s,I+Q9b)5?tP \
-    --env WORDPRESS_NONCE_KEY=?:k5gl:}RsWvFl) ZEuY.J?LU_p (k#S$+!CYUoe[AE-CTAi!C<7feA} %1pZEJz \
-    --env WORDPRESS_AUTH_SALT=1zKK`n={_!$-,X?dP%}Lmv:b4NXZm)`6f6qIEx+SPSoF@K,IZb@FAJ/H@yVVU`,Q \
-    --env WORDPRESS_SECURE_AUTH_SALT=R@IxC)x{@Sf+0J5}Z;8&T`O09dZ>lejpmVCdd{4L~/N:$Ab<G[ChzOF/-}9z6]fa \
-    --env WORDPRESS_LOGGED_IN_SALT=L{u|D>K>OALM3(!zQ<@&@B&9P<}L;swJxE%ygdviffF.APZQhFzZ*IW@UIcEO sp \
-    --env WORDPRESS_NONCE_SALT=1)Wf0T]:EpgDdR-QnL<&K|18k+YEbsjaOvQ_r4fPk~U.vdTtKG6KQW>yXIS `p@u \
+    --env WORDPRESS_AUTH_KEY="]~Oondj`IK5CX`v[G5T{623(inAxx`Y/;yMF)loj6HT9Az;ynb`Ez>8V`-<<z28Q" \
+    --env WORDPRESS_SECURE_AUTH_KEY="7D8q|]1rL3|[v_{Cop:=W=(8T]*D6s{+Nprb.d<XeSVqoj+LKa_h6Gx/;}Q_L{N#" \
+    --env WORDPRESS_LOGGED_IN_KEY="[iCylNLAL@@p3VqVm:O:K^!V&FX}_`LTwBf#mKd(/*dyc%s/5Gi:s,I+Q9b)5?tP" \
+    --env WORDPRESS_NONCE_KEY="?:k5gl:}RsWvFl) ZEuY.J?LU_p (k#S$+!CYUoe[AE-CTAi!C<7feA} %1pZEJz" \
+    --env WORDPRESS_AUTH_SALT="1zKK`n={_!$-,X?dP%}Lmv:b4NXZm)`6f6qIEx+SPSoF@K,IZb@FAJ/H@yVVU`,Q" \
+    --env WORDPRESS_SECURE_AUTH_SALT="R@IxC)x{@Sf+0J5}Z;8&T`O09dZ>lejpmVCdd{4L~/N:$Ab<G[ChzOF/-}9z6]fa" \
+    --env WORDPRESS_LOGGED_IN_SALT="L{u|D>K>OALM3(!zQ<@&@B&9P<}L;swJxE%ygdviffF.APZQhFzZ*IW@UIcEO sp" \
+    --env WORDPRESS_NONCE_SALT="1)Wf0T]:EpgDdR-QnL<&K|18k+YEbsjaOvQ_r4fPk~U.vdTtKG6KQW>yXIS `p@u" \
     --env AWS_ACCESS_KEY_ID=$DB_NAME_WP \
     --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
     --volume $WORKDIR/themes:/var/www/html/wp-content/themes \
