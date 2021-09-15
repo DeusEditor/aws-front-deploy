@@ -66,7 +66,6 @@ docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install contact-form-7 --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install flamingo --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install remove-category-url --allow-root
-docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install robots-txt-editor --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install tinymce-advanced --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wp-scss --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wp-mail-smtp --allow-root
