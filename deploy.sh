@@ -48,6 +48,7 @@ docker run -d \
     --env WORDPRESS_SECURE_AUTH_SALT="R@IxC)x{@Sf+0J5}Z;8&TO09dZ>lejpmVCdd{4L~/N:$Ab<G[ChzOF/-}9z6]fa" \
     --env WORDPRESS_LOGGED_IN_SALT="L{u|D>K>OALM3(!zQ<@&@B&9P<}L;swJxE%ygdviffF.APZQhFzZ*IW@UIcEO sp" \
     --env WORDPRESS_NONCE_SALT="1)Wf0T]:EpgDdR-QnL<&K|18k+YEbsjaOvQ_r4fPk~U.vdTtKG6KQW>yXIS p@u" \
+    --env WORDPRESS_DEBUG=1 \
     --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
     --volume $WORKDIR/themes:/var/www/html/wp-content/themes \
