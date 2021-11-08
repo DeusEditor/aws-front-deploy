@@ -71,5 +71,5 @@ docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wp-mail-smtp --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install amazon-s3-and-cloudfront --allow-root
 docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wordpress-seo --allow-root
-docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install simple-301-redirects --allow-root
+docker exec --env WORDPRESS_DB_HOST=$DB_HOST --env WORDPRESS_DB_USER=$DB_USER --env WORDPRESS_DB_PASSWORD=$DB_PASSWORD --env WORDPRESS_DB_NAME=$DB_NAME_WP wordpress wp plugin install wp-simple-301-redirects --allow-root
 docker exec wordpress chown www-data:www-data . -R
