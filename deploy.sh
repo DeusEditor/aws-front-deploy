@@ -51,6 +51,7 @@ docker run -d \
     --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
     --volume $WORKDIR/themes:/var/www/html/wp-content/themes \
+    --volume $WORKDIR/docker-front/robots.txt:/var/www/html/robots.txt \
     --name wordpress lonya/wordpress
 	
 docker run -d --network=editor -p 80:80 --restart=always --name nginx_editor nginx_editor
